@@ -67,6 +67,14 @@
     <service id="kernel" class="App\Kernel" public="true" synthetic="true">
       <tag name="routing.route_loader"/>
     </service>
+    <service id="SensioLabs\Security\SecurityChecker" class="SensioLabs\Security\SecurityChecker" autowire="true" autoconfigure="true"/>
+    <service id="SensioLabs\Security\Command\SecurityCheckerCommand" class="SensioLabs\Security\Command\SecurityCheckerCommand" autowire="true" autoconfigure="true">
+      <tag name="console.command"/>
+      <argument type="service" id="SensioLabs\Security\SecurityChecker"/>
+      <call method="setName">
+        <argument>security:check</argument>
+      </call>
+    </service>
     <service id="App\Controller\ArticleController" class="App\Controller\ArticleController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
     </service>
@@ -917,6 +925,16 @@
     <service id="session.save_listener" class="Symfony\Component\HttpKernel\EventListener\SaveSessionListener" public="false">
       <deprecated>The "%service_id%" service is deprecated since Symfony 4.1. Use the "session_listener" service instead.</deprecated>
     </service>
+    <service id="http_client" class="Symfony\Contracts\HttpClient\HttpClientInterface">
+      <tag name="monolog.logger" channel="http_client"/>
+      <tag name="http_client.client"/>
+      <argument type="collection"/>
+      <argument>6</argument>
+      <call method="setLogger">
+        <argument type="service" id="logger" on-invalid="ignore"/>
+      </call>
+      <factory class="Symfony\Component\HttpClient\HttpClient" method="create"/>
+    </service>
     <service id="debug.debug_handlers_listener" class="Symfony\Component\HttpKernel\EventListener\DebugHandlersListener" public="false">
       <tag name="kernel.event_subscriber"/>
       <tag name="monolog.logger" channel="php"/>
@@ -1117,7 +1135,7 @@
       <tag name="console.command" command="server:run"/>
       <argument>/Users/adityajoshi/Sites/the_spacebar/public</argument>
       <argument>dev</argument>
-      <argument>/Users/adityajoshi/Sites/the_spacebar/var/cache</argument>
+      <argument>/Users/adityajoshi/Sites/the_spacebar</argument>
       <call method="setName">
         <argument>server:run</argument>
       </call>
@@ -1126,21 +1144,21 @@
       <tag name="console.command" command="server:start"/>
       <argument>/Users/adityajoshi/Sites/the_spacebar/public</argument>
       <argument>dev</argument>
-      <argument>/Users/adityajoshi/Sites/the_spacebar/var/cache</argument>
+      <argument>/Users/adityajoshi/Sites/the_spacebar</argument>
       <call method="setName">
         <argument>server:start</argument>
       </call>
     </service>
     <service id="web_server.command.server_stop" class="Symfony\Bundle\WebServerBundle\Command\ServerStopCommand" public="false">
       <tag name="console.command" command="server:stop"/>
-      <argument>/Users/adityajoshi/Sites/the_spacebar/var/cache</argument>
+      <argument>/Users/adityajoshi/Sites/the_spacebar</argument>
       <call method="setName">
         <argument>server:stop</argument>
       </call>
     </service>
     <service id="web_server.command.server_status" class="Symfony\Bundle\WebServerBundle\Command\ServerStatusCommand" public="false">
       <tag name="console.command" command="server:status"/>
-      <argument>/Users/adityajoshi/Sites/the_spacebar/var/cache</argument>
+      <argument>/Users/adityajoshi/Sites/the_spacebar</argument>
       <call method="setName">
         <argument>server:status</argument>
       </call>
@@ -1193,6 +1211,8 @@
     <service id="framework_extra_bundle.argument_name_convertor" class="Sensio\Bundle\FrameworkExtraBundle\Request\ArgumentNameConverter" public="false">
       <argument type="service" id="argument_metadata_factory"/>
     </service>
+    <service id=".instanceof.Symfony\Component\Console\Command\Command.0.SensioLabs\Security\Command\SecurityCheckerCommand" class="SensioLabs\Security\Command\SecurityCheckerCommand" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.SensioLabs\Security\Command\SecurityCheckerCommand" class="SensioLabs\Security\Command\SecurityCheckerCommand" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.CmORmuK" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -1271,8 +1291,9 @@
       </argument>
     </service>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
-      <argument type="service" id=".service_locator.WWy977u"/>
+      <argument type="service" id=".service_locator.2qDsyfW"/>
       <argument type="collection">
+        <argument key="security:check">SensioLabs\Security\Command\SecurityCheckerCommand</argument>
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
         <argument key="cache:clear">console.command.cache_clear</argument>
@@ -1302,9 +1323,10 @@
         <argument key="server:status">web_server.command.server_status</argument>
       </argument>
     </service>
-    <service id=".service_locator.WWy977u" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.2qDsyfW" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="SensioLabs\Security\Command\SecurityCheckerCommand" type="service" id="SensioLabs\Security\Command\SecurityCheckerCommand"/>
         <argument key="console.command.about" type="service" id="console.command.about"/>
         <argument key="console.command.assets_install" type="service" id="console.command.assets_install"/>
         <argument key="console.command.cache_clear" type="service" id="console.command.cache_clear"/>
@@ -1370,6 +1392,7 @@
     <service id="Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface" alias="session.flash_bag" public="false"/>
     <service id="session.storage.filesystem" alias="session.storage.mock_file" public="false"/>
     <service id="session.storage" alias="session.storage.native"/>
+    <service id="Symfony\Contracts\HttpClient\HttpClientInterface" alias="http_client"/>
     <service id="Symfony\Component\HttpKernel\Debug\FileLinkFormatter" alias="debug.file_link_formatter" public="false"/>
     <service id="router" alias="router.default" public="true"/>
     <service id="Symfony\Component\Routing\RouterInterface" alias="router.default" public="false"/>

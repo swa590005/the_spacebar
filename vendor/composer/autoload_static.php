@@ -23,6 +23,7 @@ class ComposerStaticInit8f88521b48e0856c3bf82323087a7ff6
             'Symfony\\Polyfill\\Intl\\Idn\\' => 26,
             'Symfony\\Flex\\' => 13,
             'Symfony\\Contracts\\Service\\' => 26,
+            'Symfony\\Contracts\\HttpClient\\' => 29,
             'Symfony\\Contracts\\EventDispatcher\\' => 34,
             'Symfony\\Contracts\\Cache\\' => 24,
             'Symfony\\Component\\Yaml\\' => 23,
@@ -33,6 +34,7 @@ class ComposerStaticInit8f88521b48e0856c3bf82323087a7ff6
             'Symfony\\Component\\Mime\\' => 23,
             'Symfony\\Component\\HttpKernel\\' => 29,
             'Symfony\\Component\\HttpFoundation\\' => 33,
+            'Symfony\\Component\\HttpClient\\' => 29,
             'Symfony\\Component\\Finder\\' => 25,
             'Symfony\\Component\\Filesystem\\' => 29,
             'Symfony\\Component\\EventDispatcher\\' => 34,
@@ -46,6 +48,7 @@ class ComposerStaticInit8f88521b48e0856c3bf82323087a7ff6
             'Symfony\\Bundle\\WebServerBundle\\' => 31,
             'Symfony\\Bundle\\FrameworkBundle\\' => 31,
             'Sensio\\Bundle\\FrameworkExtraBundle\\' => 35,
+            'SensioLabs\\Security\\' => 20,
         ),
         'P' => 
         array (
@@ -90,6 +93,10 @@ class ComposerStaticInit8f88521b48e0856c3bf82323087a7ff6
         array (
             0 => __DIR__ . '/..' . '/symfony/service-contracts',
         ),
+        'Symfony\\Contracts\\HttpClient\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/http-client-contracts',
+        ),
         'Symfony\\Contracts\\EventDispatcher\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher-contracts',
@@ -129,6 +136,10 @@ class ComposerStaticInit8f88521b48e0856c3bf82323087a7ff6
         'Symfony\\Component\\HttpFoundation\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/http-foundation',
+        ),
+        'Symfony\\Component\\HttpClient\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/http-client',
         ),
         'Symfony\\Component\\Finder\\' => 
         array (
@@ -181,6 +192,10 @@ class ComposerStaticInit8f88521b48e0856c3bf82323087a7ff6
         'Sensio\\Bundle\\FrameworkExtraBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/sensio/framework-extra-bundle/src',
+        ),
+        'SensioLabs\\Security\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sensiolabs/security-checker/SensioLabs/Security',
         ),
         'Psr\\Log\\' => 
         array (
