@@ -6,7 +6,7 @@
 use Symfony\Component\DependencyInjection\Dumper\Preloader;
 
 require dirname(__DIR__, 3).'/vendor/autoload.php';
-require __DIR__.'/ContainerZUmlnMG/srcApp_KernelDevDebugContainer.php';
+require __DIR__.'/ContainerJEJIT3I/srcApp_KernelDevDebugContainer.php';
 
 $classes = [];
 $classes[] = 'App\Kernel';
@@ -37,9 +37,27 @@ $classes[] = 'Sensio\Bundle\FrameworkExtraBundle\EventListener\ParamConverterLis
 $classes[] = 'Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager';
 $classes[] = 'Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter';
 $classes[] = 'Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DateTimeParamConverter';
+$classes[] = 'Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener';
+$classes[] = 'Sensio\Bundle\FrameworkExtraBundle\Templating\TemplateGuesser';
 $classes[] = 'Sensio\Bundle\FrameworkExtraBundle\EventListener\HttpCacheListener';
 $classes[] = 'Sensio\Bundle\FrameworkExtraBundle\EventListener\IsGrantedListener';
 $classes[] = 'Sensio\Bundle\FrameworkExtraBundle\Request\ArgumentNameConverter';
+$classes[] = 'Twig\Environment';
+$classes[] = 'Symfony\Bundle\TwigBundle\Loader\NativeFilesystemLoader';
+$classes[] = 'Symfony\Bridge\Twig\Extension\ProfilerExtension';
+$classes[] = 'Twig\Profiler\Profile';
+$classes[] = 'Symfony\Bridge\Twig\Extension\TranslationExtension';
+$classes[] = 'Symfony\Bridge\Twig\Extension\CodeExtension';
+$classes[] = 'Symfony\Bridge\Twig\Extension\RoutingExtension';
+$classes[] = 'Symfony\Bridge\Twig\Extension\YamlExtension';
+$classes[] = 'Symfony\Bridge\Twig\Extension\HttpKernelExtension';
+$classes[] = 'Symfony\Bridge\Twig\Extension\HttpFoundationExtension';
+$classes[] = 'Symfony\Component\HttpFoundation\UrlHelper';
+$classes[] = 'Twig\Extension\DebugExtension';
+$classes[] = 'Symfony\Bridge\Twig\AppVariable';
+$classes[] = 'Twig\RuntimeLoader\ContainerRuntimeLoader';
+$classes[] = 'Twig\Extra\TwigExtraBundle\MissingExtensionSuggestor';
+$classes[] = 'Symfony\Bundle\TwigBundle\DependencyInjection\Configurator\EnvironmentConfigurator';
 $classes[] = 'Symfony\Component\HttpKernel\Log\Logger';
 $classes[] = 'Symfony\Bundle\FrameworkBundle\Routing\Router';
 $classes[] = 'Symfony\Component\DependencyInjection\ParameterBag\ContainerBag';
