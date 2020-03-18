@@ -10,15 +10,15 @@ class ArticleController extends AbstractController
     /**
      * Undocumented function
      *
-     * @Route("/")
+     * @Route("/", name="app_homepage")
      */
     public function homepage()
     {
-        return new Response('my first front page content');
+        return $this->render('article/homepage.html.twig');
     }
 
     /**
-     * @Route("news/{slug}")
+     * @Route("news/{slug}", name="article_show")
      */
 
     public function show($slug)
