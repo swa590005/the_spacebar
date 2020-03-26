@@ -16,35 +16,27 @@ class ArticleStatsCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Returns some article stats!')
-            ->addArgument('slug', InputArgument::REQUIRED, 'The article\'s slug')
-            ->addOption('format', null, InputOption::VALUE_REQUIRED, 'The output format', 'text')
+            ->setDescription('Add a short description for your command')
+            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
+            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $slug = $input->getArgument('slug');
+        $arg1 = $input->getArgument('arg1');
 
-        $data = [
-            'slug' => $slug,
-            'hearts' => rand(10, 100),
-        ];
-
-        switch ($input->getOption('format')) {
-            case 'text':
-                $rows = [];
-                foreach ($data as $key => $val) {
-                    $rows[] = [$key, $val];
-                }
-                $io->table(['Key', 'Value'], $rows);
-                break;
-            case 'json':
-                $io->write(json_encode($data));
-                break;
-            default:
-                throw new \Exception('What kind of crazy format is that!?');
+        if ($arg1) {
+            $io->note(sprintf('You passed an argument: %s', $arg1));
         }
+
+        if ($input->getOption('option1')) {
+            // ...
+        }
+
+        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+
+        return 0;
     }
 }
