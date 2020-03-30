@@ -4,15 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
-use App\Service\MarkdownHelper;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Nexy\Slack\Client;
 //use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends AbstractController
 {
@@ -35,25 +31,16 @@ class ArticleController extends AbstractController
      * @Route("news/{slug}", name="article_show")
      */
 
-    public function show($slug, Client $slack, EntityManagerInterface $em)
+    public function show(Article $article, Client $slack)
     {
-        if ($slug === 'khaaaaaan') {
+        if ($article->getSlug() === 'khaaaaaan') {
             $message = $slack->createMessage()
                 ->from('Khan')
                 ->withIcon(':ghost:')
                 ->setText('Ah, Kirk, my old friend...');
             $slack->sendMessage($message);
-        }
+        }  
         
-        $repository=$em->getRepository(Article::class);
-        /** @var Article $article */
-        $article=$repository->findOneBy(['slug'=> $slug]);
-
-        if(!$article)
-        {
-            throw $this->createNotFoundException(sprintf('No article for slug "%s"',$slug));
-        }
-       
 
         $comments = [
             'I ate a normal rock once. It did NOT taste like bacon!',
