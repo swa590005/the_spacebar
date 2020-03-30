@@ -41,6 +41,7 @@ class ArticleController extends AbstractController
             $slack->sendMessage($message);
         }  
         
+        
 
         $comments = [
             'I ate a normal rock once. It did NOT taste like bacon!',
