@@ -20,13 +20,6 @@ class ArticleAdminController extends AbstractController
         
         die('todo');
 
-
-
-        return new Response(sprintf(
-                'hello!! new Article id:#%d slug: %s ',
-                $article->getId(),
-                $article->getSlug()
-        ));
     }
 
 }
