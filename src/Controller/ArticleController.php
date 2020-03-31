@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Nexy\Slack\Client;
+use Psr\Log\LoggerInterface;
 //use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,7 +43,7 @@ class ArticleController extends AbstractController
             $slack->sendMessage($message);
         }  
         
-        
+
 
         $comments = [
             'I ate a normal rock once. It did NOT taste like bacon!',
@@ -61,10 +63,13 @@ class ArticleController extends AbstractController
      * @Route("news/{slug}/heart", name="article-toggle-heart",methods={"POST"})
      */
 
-    public function toggleArticleHeart($slug)
+    public function toggleArticleHeart( Article $article, LoggerInterface $logger, EntityManagerInterface $em)
     {
         //TODO - actually heart/unheart article
-        return new JsonResponse(['hearts'=> rand(5, 100)]);
+        $article->incrementHeartCount();
+        $em->flush();
+        $logger->info('Article is being hearted!');
+        return new JsonResponse(['hearts'=> $article->getHeartCount()]);
     }
 
 }
