@@ -3,16 +3,17 @@
 namespace App\DataFixtures;
 
 use App\Entity\Article;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ArticleFixtures extends Fixture
+class ArticleFixtures extends BaseFixture
 {
-    public function load(ObjectManager $manager)
+    protected function loadData(ObjectManager $manager)
     {
-        $article= new Article();
-        $article->setTitle('Why Asteroids Taste Like Bacon')
-                ->setSlug('why-asteroids-taste-like-bacon-'.rand(100, 999))
+        $this->createMany(Article::class,10, function(Article $article, $count )
+        {
+           
+            $article->setTitle('Why Asteroids Taste Like Bacon')
+                ->setSlug('why-asteroids-taste-like-bacon-'.$count)
                 ->setContent(<<<EOF
                 Spicy **jalapeno bacon** ipsum dolor amet veniam shank in dolore. Ham hock nisi landjaeger cow,
                 lorem proident [beef ribs](https://baconipsum.com/) aute enim veniam ut cillum pork chuck picanha. Dolore reprehenderit
@@ -40,7 +41,8 @@ class ArticleFixtures extends Fixture
                 $article->setAuthor('Mike Ferengi');
                 $article->setHeartCount(rand(5,100));
                 $article->setImageFilename('asteroid.jpeg');
-                $manager->persist($article);
-                $manager->flush();
+        });
+
+        $manager->flush();
     }
 }
