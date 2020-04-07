@@ -27,6 +27,7 @@ class CommentFixture extends BaseFixture implements DependentFixtureInterface
         $manager->flush();
     }
 
+    // this dependency loads fixture files in order rather than alphabeticle
     public function getDependencies()
     {
         return [
