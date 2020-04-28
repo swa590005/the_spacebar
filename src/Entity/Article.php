@@ -16,6 +16,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 class Article
 {
     use TimestampableEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -52,7 +53,7 @@ class Article
     /**
      * @ORM\Column(type="integer")
      */
-    private $heartCount;
+    private $heartCount = 0;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -61,7 +62,7 @@ class Article
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", fetch="EXTRA_LAZY")
-     * @ORM\OrderBy({"createdAt"="DESC"})
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $comments;
 
@@ -76,7 +77,7 @@ class Article
         $this->tags = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
@@ -92,6 +93,7 @@ class Article
 
         return $this;
     }
+
 
     public function getSlug(): ?string
     {
@@ -153,6 +155,13 @@ class Article
         return $this;
     }
 
+    public function incrementHeartCount(): self
+    {
+        $this->heartCount = $this->heartCount + 1;
+
+        return $this;
+    }
+
     public function getImageFilename(): ?string
     {
         return $this->imageFilename;
@@ -164,15 +173,10 @@ class Article
 
         return $this;
     }
+
     public function getImagePath()
     {
         return 'images/'.$this->getImageFilename();
-    }
-
-    public function incrementHeartCount(): self
-    {
-        $this->heartCount= $this->heartCount+1;
-        return $this;
     }
 
     /**
@@ -188,7 +192,8 @@ class Article
      */
     public function getNonDeletedComments(): Collection
     {
-        $criteria=ArticleRepository::createNonDeletedCriteria();
+        $criteria = ArticleRepository::createNonDeletedCriteria();
+
         return $this->comments->matching($criteria);
     }
 

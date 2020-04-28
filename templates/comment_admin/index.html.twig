@@ -1,21 +1,21 @@
 {% extends 'content_base.html.twig' %}
 
-{% block content_class %}{{ parent() }} show-article-container-border-green{% endblock %}
-
 {% block title %}Manage Comments{% endblock %}
 
-{% block content_body %}
+{% block content_class %}{{ parent() }} show-article-container-border-green{% endblock %}
 
+{% block content_body %}
     <div class="row">
         <div class="col-sm-12">
             <h1>Manage Comments ({{ pagination.getTotalItemCount }})</h1>
+
             <form>
                 <div class="input-group mb-3">
                     <input type="text"
                            name="q"
                            class="form-control"
+                           value="{{ app.request.query.get('q') }}"
                            placeholder="Search..."
-                           value="{{ app.request.query.get('q')}}"
                     >
                     <div class="input-group-append">
                         <button type="submit"
@@ -25,6 +25,7 @@
                     </div>
                 </div>
             </form>
+
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -35,34 +36,34 @@
                 </tr>
                 </thead>
                 <tbody>
-                    {% for comment in pagination %}
+                {% for comment in pagination %}
                     <tr>
                         <td>
-                            <a href="{{path('article_show',{'slug':comment.article.slug})}}">
-                                {{comment.article.title}}
+                            <a href="{{ path('article_show', {'slug': comment.article.slug}) }}">
+                                {{ comment.article.title }}
                             </a>
                         </td>
                         <td>
-                            {{comment.authorName}}
+                            {{ comment.authorName }}
                         </td>
                         <td style="width: 20%;">
-                            {{comment.content|u.truncate(30)}}
+                            {{ comment.content|truncate }}
                         </td>
                         <td>
-                            {{comment.createdAt|ago}}
+                            {{ comment.createdAt|ago }}
                         </td>
-                    </tr>  
-                    {% else %}
-                        <tr>
-                            <td colspan="4" class="text-center" >
-                                No Comments Found
-                            </td>
-                        </tr> 
-                    {% endfor %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            No comments found
+                        </td>
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
+
             {{ knp_pagination_render(pagination) }}
         </div>
     </div>
-            
 {% endblock %}

@@ -170,8 +170,9 @@ html {height:100%}
     background-color: #fff;
 }
 
-.show-article-container-border-green {
-    border-top: 2px solid green;
+.show-article-container.show-article-container-border-green {
+    border-top: 3px solid green;
+    border-radius: 3px;
 }
 
 .show-article-img {
@@ -207,6 +208,10 @@ html {height:100%}
     font-size: 1.5em;
 }
 
+.comment-container {
+    max-width: 600px;
+}
+
 .comment-img {
     width: 50px;
     height: auto;
@@ -224,6 +229,9 @@ html {height:100%}
 @media (max-width: 767px) {
     .comment-form {
         min-width: 260px;
+    }
+    .comment-container {
+        max-width: 280px;
     }
 }
 
