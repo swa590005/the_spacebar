@@ -142,4 +142,14 @@ class User implements UserInterface
 
         return $this;
     }
+    // size is null meaning it is optional
+    public function getAvatarUrl(int $size = null) : string
+    {
+        $url='https://robohash.org/'.$this->getEmail();
+        //if size is passes
+        if($size){
+            $url.=sprintf('?size=%d x %d',$size,$size);
+        }
+        return $url;
+    }
 }
