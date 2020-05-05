@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
     /**
-     * @isGranted("ROLE_ADMIN")
+     * @isGranted("ROLE_ADMIN_ARTICLE")
      */
 class ArticleAdminController extends AbstractController
 {
