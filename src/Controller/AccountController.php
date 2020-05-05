@@ -22,4 +22,18 @@ class AccountController extends BaseController
             
         ]);
     }
+    /**
+     * @Route("/api/account", name="api_account")
+     */
+    //just need to tell the json() method to only serialize properties that are 
+    //in the group called "main". To do that, pass the normal 200 status code as 
+    //the second argument, we don't need any custom headers, but we do want to pass 
+    //one item to "context". Set groups => an array with the string main
+    public function accountApi()
+    {
+        $user=$this->getUser();
+        return $this->json($user, 200, [],[
+            'groups'=>['main']
+        ]);
+    }  
 }
