@@ -31,9 +31,11 @@ class AccountController extends BaseController
     //one item to "context". Set groups => an array with the string main
     public function accountApi()
     {
+        
         $user=$this->getUser();
         return $this->json($user, 200, [],[
             'groups'=>['main']
         ]);
+        
     }  
 }
