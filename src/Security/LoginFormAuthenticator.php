@@ -75,6 +75,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);   
     }
 
+    //We added some extra code here to make sure that if the user went to, 
+    //for example, /admin/comment as an anonymous user, then, after they log in, 
+    //they would be sent back to /admin/comment.
+    
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         if($targetPath=$this->getTargetPath($request->getSession(),$providerKey))

@@ -2,8 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -36,11 +41,43 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register()
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $formAuthenticator)
     {
-        return $this->render('security/register.html.twig', [
+
+        if($request->isMethod('POST'))
+        {
+            $user= new User;
+            $user->setEmail($request->request->get('email'));
+            $user->setFirstName('Mystery');
+            $user->setPassword($passwordEncoder->encodePassword(
+                $user,
+                $request->request->get('password')
+            ));
+
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            // After we save the User to the database, 
+            // we're basically going to tell Symfony to use our LoginFormAuthenticator 
+            // class to authenticate the user and redirect by using its 
+            // onAuthenticationSuccess() method.
+
+            // Check it out: add two arguments to our controller. 
+            // First, a service called GuardAuthenticatorHandler $guardHandler. 
+            // Second, the authenticator that you want to authenticate 
+            // through: LoginFormAuthenticator $formAuthenticator:
+
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $formAuthenticator,
+                'main'
+            );
             
-        ]);
+        }
+
+        return $this->render('security/register.html.twig');
     }
 
 
