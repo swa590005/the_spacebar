@@ -25,10 +25,10 @@ class ArticleAdminController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
-            $data=$form->getData();
-            $article= new Article;
-            $article->setTitle($data['title']);
-            $article->setContent($data['content']);
+            //When the form submits, it notices the data_class and so creates a new Article() 
+            //object for us. Then, it uses the setter methods to populate the data
+
+            $article=$form->getData();
             $article->setAuthor($this->getUser());
 
             $em->persist($article);
