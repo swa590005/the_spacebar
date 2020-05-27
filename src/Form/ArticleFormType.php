@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +14,9 @@ class ArticleFormType extends AbstractType
     {
         // to add two fields to form
         $builder 
-            ->add('title')
+            ->add('title', TextType::class,[
+                'help'=> 'Choose something catchy!'
+            ])
             ->add('content')
         ;
     }
