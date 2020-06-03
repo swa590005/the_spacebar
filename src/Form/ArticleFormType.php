@@ -36,6 +36,7 @@ class ArticleFormType extends AbstractType
                 },
                 'placeholder'=>'Choose an Author',
                 'choices' => $this->userRepository->findAllEmailAlphabetical(),
+                'invalid_message' => 'Symfony is too smart for your hacking!',
             ] )
         ;
     }
