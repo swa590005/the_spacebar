@@ -9,12 +9,19 @@
 
 {% block body %}
 
-    {{form_start(registrationForm)}}
+    {{ form_start(registrationForm,{
+        attr: {
+            'class':'form-signin'
+        }
+    }) }}
+    <h1 class="h3 mb-3 font-weight-normal">Register</h1>
         {{form_widget(registrationForm)}}
         <button class="btn btn-lg btn-primary btn-block" type="submit">
                 Register
         </button>
     {{form_end(registrationForm)}}
+
+
      {# todo - replace with a Symfony form! 
         <form class="form-signin" method="post">
             <h1 class="h3 mb-3 font-weight-normal">Register</h1>
